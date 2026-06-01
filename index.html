@@ -2343,14 +2343,14 @@ function submitReservation() {
   const msg = encodeURIComponent(`Hola SELVAGGIA, quiero reservar una mesa:\n\n👤 Nombre: ${name}\n📱 Teléfono: ${phone}\n👥 Personas: ${guests}\n📅 Fecha: ${dateFormatted}\n🕐 Hora: ${time}\n${document.getElementById('resOccasion').value ? '🎉 Ocasión: ' + document.getElementById('resOccasion').value : ''}\n${document.getElementById('resNotes').value ? '📝 Notas: ' + document.getElementById('resNotes').value : ''}`);
 
   setTimeout(() => {
-    window.open('https://wa.me/523300000000?text=' + msg, '_blank');
+    window.open('https://wa.me/523332539967?text=' + msg, '_blank');
     toastEl.classList.remove('show');
   }, 2500);
 }
 
 // WHATSAPP FLOAT
 function openWhatsApp() {
-  window.open('https://wa.me/523300000000?text=Hola!%20Quisiera%20reservar%20una%20mesa%20en%20SELVAGGIA', '_blank');
+  window.open('https://wa.me/523332539967?text=Hola!%20Quisiera%20reservar%20una%20mesa%20en%20SELVAGGIA', '_blank');
 }
 
 // PARALLAX HERO
