@@ -2240,37 +2240,6 @@ select option { color: var(--cream); background: #1a1a16; }
   </button>
   <span style="font-family:'Montserrat',sans-serif; font-size:0.42rem; letter-spacing:0.15em; color:#c9a96e; text-transform:uppercase;">Pagar</span>
 </div>
-  <div id="pagoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
-  <div style="background:#0a0a08; border:0.5px solid #2a2a22; border-radius:16px; padding:2rem; width:100%; max-width:400px; max-height:90vh; overflow-y:auto; font-family:'Montserrat',sans-serif; position:relative;">
-    <button onclick="document.getElementById('pagoModal').style.display='none'" style="position:absolute; top:1rem; right:1rem; background:none; border:none; color:#6a6050; font-size:1.2rem; cursor:pointer;">✕</button>
-    <div style="font-size:1rem; letter-spacing:0.4em; color:#c9a96e; text-align:center; margin-bottom:0.3rem; font-weight:500;">✦ SELVAGGIA</div>
-    <div style="font-size:0.5rem; letter-spacing:0.2em; color:#6a6050; text-align:center; margin-bottom:1rem; text-transform:uppercase;">Cocina Mediterránea Premium</div>
-    <div style="width:40px; height:0.5px; background:#c9a96e; margin:0 auto 1.2rem;"></div>
-    <div style="font-size:0.5rem; letter-spacing:0.2em; color:#4a4840; text-align:center; text-transform:uppercase; margin-bottom:1.2rem;">Pago de cuenta</div>
-    <div style="background:#111109; border:0.5px solid #2a2a22; border-radius:8px; padding:1rem 1.2rem; margin:1rem 0; display:flex; justify-content:space-between; align-items:center;">
-      <span style="font-size:0.52rem; letter-spacing:0.15em; color:#6a6050; text-transform:uppercase; font-weight:500;">Total a pagar</span>
-      <span style="font-size:1.4rem; color:#c9a96e; font-weight:600; letter-spacing:0.05em;">$4,295</span>
-    </div>
-    <div style="font-size:0.52rem; letter-spacing:0.15em; color:#6a6050; text-transform:uppercase; margin-bottom:0.4rem; font-weight:500;">Número de tarjeta</div>
-    <input placeholder="0000  0000  0000  0000" maxlength="19" style="width:100%; background:#111109; border:0.5px solid #2a2a22; border-radius:6px; padding:0.75rem 1rem; color:#e8e0d0; font-family:'Montserrat',sans-serif; font-size:0.82rem; box-sizing:border-box; margin-bottom:1rem; outline:none;" />
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
-      <div>
-        <div style="font-size:0.52rem; letter-spacing:0.15em; color:#6a6050; text-transform:uppercase; margin-bottom:0.4rem; font-weight:500;">Vencimiento</div>
-        <input placeholder="MM / AA" maxlength="5" style="width:100%; background:#111109; border:0.5px solid #2a2a22; border-radius:6px; padding:0.75rem 1rem; color:#e8e0d0; font-family:'Montserrat',sans-serif; font-size:0.82rem; box-sizing:border-box; outline:none;" />
-      </div>
-      <div>
-        <div style="font-size:0.52rem; letter-spacing:0.15em; color:#6a6050; text-transform:uppercase; margin-bottom:0.4rem; font-weight:500;">CVV</div>
-        <input placeholder="···" maxlength="4" type="password" style="width:100%; background:#111109; border:0.5px solid #2a2a22; border-radius:6px; padding:0.75rem 1rem; color:#e8e0d0; font-family:'Montserrat',sans-serif; font-size:0.82rem; box-sizing:border-box; outline:none;" />
-      </div>
-    </div>
-    <div style="font-size:0.52rem; letter-spacing:0.15em; color:#6a6050; text-transform:uppercase; margin:1rem 0 0.4rem; font-weight:500;">Nombre en la tarjeta</div>
-    <input placeholder="Como aparece en la tarjeta" style="width:100%; background:#111109; border:0.5px solid #2a2a22; border-radius:6px; padding:0.75rem 1rem; color:#e8e0d0; font-family:'Montserrat',sans-serif; font-size:0.82rem; box-sizing:border-box; margin-bottom:1rem; outline:none;" />
-    <button style="width:100%; background:#c9a96e; border:none; border-radius:6px; padding:1rem; font-family:'Montserrat',sans-serif; font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:#0a0a08; font-weight:600; cursor:pointer; margin-top:0.5rem;">Pagar ahora</button>
-    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:1rem;">
-      <span style="font-size:0.48rem; letter-spacing:0.1em; color:#4a4840; text-transform:uppercase;">🔒 Pago seguro con encriptación SSL</span>
-    </div>
-  </div>
-</div>
   <!-- BOTÓN FLOTANTE PAGAR -->
 <div style="position:fixed;bottom:2rem;right:2rem;z-index:999;display:flex;flex-direction:column;align-items:center;gap:4px;">
   <button onclick="document.getElementById('pagoModal').style.display='flex'" style="width:56px;height:56px;background:#c9a96e;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
