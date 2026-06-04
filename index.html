@@ -2235,7 +2235,13 @@ select option { color: var(--cream); background: #1a1a16; }
     <span class="footer-copy" style="opacity:0.5;">Diseñado con excelencia</span>
   </div>
 </footer>
-
+<!-- BOTÓN FLOTANTE PAGAR -->
+<div style="position:fixed;bottom:2rem;right:2rem;z-index:999;display:flex;flex-direction:column;align-items:center;gap:4px;">
+  <button onclick="document.getElementById('svModal').style.display='flex'" style="width:56px;height:56px;background:#c9a96e;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#0a0a08" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+  </button>
+  <span style="font-family:'Montserrat',sans-serif;font-size:0.42rem;letter-spacing:0.15em;color:#c9a96e;text-transform:uppercase;">Pagar</span>
+</div>
 <!-- MODAL SISTEMA DE PAGO SELVAGGIA -->
 <div id="svModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;">
 <div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:16px;width:100%;max-width:480px;font-family:'Montserrat',sans-serif;overflow:hidden;margin:auto;position:relative;">
