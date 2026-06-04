@@ -2372,6 +2372,7 @@ select option { color: var(--cream); background: #1a1a16; }
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
 <script>
 const SV_PASS='selvaggia2025';
@@ -2396,7 +2397,7 @@ function svGenerarCodigo(){return String(Math.floor(100000+Math.random()*900000)
 function svGenerarQR(codigo){
   const cont=document.getElementById('svQRContainer');
   cont.innerHTML='';
-  new QRCode(cont,{text:codigo,width:180,height:180,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+  new QRCodeStyling({width:180,height:180,data:codigo,dotsOptions:{type:'rounded',color:'#000000'},cornersSquareOptions:{type:'extra-rounded',color:'#000000'},backgroundOptions:{color:'#ffffff'}}).append(cont);
 }
 
 function svRenderMesas(){
