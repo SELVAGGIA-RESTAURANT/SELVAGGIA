@@ -2235,130 +2235,141 @@ select option { color: var(--cream); background: #1a1a16; }
     <span class="footer-copy" style="opacity:0.5;">Diseñado con excelencia</span>
   </div>
 </footer>
-<div style="position:fixed; bottom:2rem; right:2rem; z-index:999; display:flex; flex-direction:column; align-items:center; gap:4px;">
-  <button onclick="document.getElementById('pagoModal').style.display='flex'" style="width:52px; height:52px; background:#c9a96e; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#0a0a08" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-  </button>
-  <span style="font-family:'Montserrat',sans-serif;font-size:0.42rem;letter-spacing:0.15em;color:#c9a96e;text-transform:uppercase;">Pagar</span>
-</div>
+
 <!-- MODAL SISTEMA DE PAGO SELVAGGIA -->
-<div id="pagoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;">
-<div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:16px;width:100%;max-width:480px;font-family:'Montserrat',sans-serif;overflow:hidden;margin:auto;">
+<div id="svModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;">
+<div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:16px;width:100%;max-width:480px;font-family:'Montserrat',sans-serif;overflow:hidden;margin:auto;position:relative;">
 
   <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid #2a2a22;">
-    <button id="tab-mesero" onclick="svTab('mesero')" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a96e;border:none;border-bottom:1px solid #c9a96e;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">Mesero</button>
-    <button id="tab-cliente" onclick="svTab('cliente')" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#6a6050;border:none;border-bottom:0.5px solid #2a2a22;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">Cliente</button>
+    <button id="svTabM" onclick="svPedirPass()" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#6a6050;border:none;border-bottom:0.5px solid #2a2a22;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">🔒 Mesero</button>
+    <button id="svTabC" onclick="svSetTab('cliente')" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a96e;border:none;border-bottom:1px solid #c9a96e;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">Cliente</button>
   </div>
 
   <!-- PANEL MESERO -->
-  <div id="sv-panel-mesero" style="padding:1.2rem;">
-    <button onclick="document.getElementById('pagoModal').style.display='none'" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;">✕</button>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;">
-      <div>
-        <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Mesa</div>
-        <select id="sv-mesa" onchange="svActualizarMesa()" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;outline:none;">
-     <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-<option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
-<option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
-<option>21</option><option>22</option><option>23</option><option>24</option><option>25</option>
-<option>26</option><option>27</option><option>28</option><option>29</option><option>30</option>
-        </select>
+  <div id="svPanelMesero" style="display:none;padding:1.2rem;">
+    <button onclick="document.getElementById('svModal').style.display='none'" style="position:absolute;top:0.8rem;right:0.8rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;">✕</button>
+    <div id="svVistaMesas">
+      <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Selecciona una mesa</div>
+      <div id="svMesaGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem;"></div>
+      <div style="font-size:0.48rem;color:#4a4840;"><span style="color:#c9a96e;">●</span> Ocupada &nbsp;<span style="color:#3a3830;">●</span> Libre</div>
+    </div>
+    <div id="svVistaComanda" style="display:none;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
+        <button onclick="svVolverMesas()" style="background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.4rem 0.7rem;font-family:'Montserrat',sans-serif;font-size:0.48rem;color:#6a6050;cursor:pointer;">← Mesas</button>
+        <div style="font-size:0.65rem;color:#c9a96e;font-weight:500;" id="svComandaTitle">Mesa 1</div>
       </div>
-      <div>
-        <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Personas</div>
-        <select style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;outline:none;">
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-<option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
-<option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
-<option>21</option><option>22</option><option>23</option><option>24</option><option>25</option>
-<option>26</option><option>27</option><option>28</option><option>29</option><option>30</option>
-        </select>
+      <div style="background:#111109;border:1px solid #c9a96e;border-radius:10px;padding:1rem;text-align:center;margin:0.8rem 0;">
+        <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Código único del cliente</div>
+        <div id="svCodigoMesa" style="font-size:2rem;font-weight:600;color:#c9a96e;letter-spacing:0.3em;">------</div>
+        <div style="font-size:0.45rem;color:#4a4840;margin-top:4px;letter-spacing:0.1em;">Muéstrale este QR al cliente</div>
+        <div id="svQRContainer" style="margin-top:0.8rem;display:flex;justify-content:center;"></div>
       </div>
-    </div>
-
-    <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Agregar manualmente</div>
-    <div style="display:grid;grid-template-columns:1fr 70px auto;gap:6px;margin-bottom:1rem;align-items:end;">
-      <input id="sv-platillo-input" placeholder="Nombre del platillo" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;" />
-      <input id="sv-precio-input" placeholder="$" type="number" min="0" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;" />
-      <button onclick="svAgregarManual()" style="background:#c9a96e;border:none;border-radius:6px;padding:0.6rem 0.9rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;white-space:nowrap;">+ Agregar</button>
-    </div>
-
-    <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:7px;">Menú</div>
-    <div id="sv-categorias" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:0.8rem;"></div>
-    <div id="sv-platillos-lista" style="display:none;margin-bottom:0.8rem;"></div>
-
-    <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Cuenta — <span id="sv-mesa-label" style="color:#4a4840;">Mesa 1</span></div>
-    <div id="sv-lista-items"></div>
-    <div id="sv-empty-msg" style="font-size:0.65rem;color:#3a3830;text-align:center;padding:0.6rem 0;">Agrega platillos para comenzar</div>
-    <div style="background:#111109;border:0.5px solid #2a2a22;border-radius:8px;padding:0.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;margin:0.8rem 0;">
-      <span style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;">Total</span>
-      <span id="sv-total-mesero" style="font-size:1.2rem;color:#c9a96e;font-weight:600;">$0</span>
-    </div>
-    <div style="display:flex;gap:8px;">
-      <button onclick="svLimpiar()" style="flex:1;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Limpiar mesa</button>
-      <button onclick="svGenerarQR()" style="flex:2;background:#c9a96e;border:none;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Generar QR para cliente</button>
+      <div style="display:grid;grid-template-columns:1fr 65px auto;gap:5px;margin-bottom:0.8rem;align-items:end;">
+        <input id="svPlatInput" placeholder="Platillo" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.8rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
+        <input id="svPrecInput" placeholder="$" type="number" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.8rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
+        <button onclick="svAgregarManual()" style="background:#c9a96e;border:none;border-radius:6px;padding:0.6rem 0.7rem;font-family:'Montserrat',sans-serif;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;white-space:nowrap;">+ Add</button>
+      </div>
+      <div id="svCats" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:0.7rem;"></div>
+      <div id="svPlats" style="display:none;margin-bottom:0.7rem;max-height:180px;overflow-y:auto;"></div>
+      <div id="svListaComanda"></div>
+      <div id="svEmptyComanda" style="font-size:0.62rem;color:#3a3830;text-align:center;padding:0.5rem 0;">Agrega platillos</div>
+      <div style="background:#111109;border:0.5px solid #2a2a22;border-radius:8px;padding:0.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;margin:0.8rem 0;">
+        <span style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;">Total</span>
+        <span id="svTotalComanda" style="font-size:1.1rem;color:#c9a96e;font-weight:600;">$0</span>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button onclick="svLimpiarMesa()" style="flex:1;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Limpiar</button>
+        <button onclick="svEnviarCliente()" style="flex:2;background:#c9a96e;border:none;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Enviar al cliente ↗</button>
+      </div>
     </div>
   </div>
 
   <!-- PANEL CLIENTE -->
-  <div id="sv-panel-cliente" style="display:none;padding:1.2rem;">
-    <button onclick="document.getElementById('pagoModal').style.display='none'" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;">✕</button>
-    <div style="text-align:center;margin-bottom:1rem;">
+  <div id="svPanelCliente" style="display:block;padding:1.2rem;">
+    <button onclick="document.getElementById('svModal').style.display='none'" style="position:absolute;top:0.8rem;right:0.8rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;">✕</button>
+    <div id="svClLogin" style="text-align:center;padding:0.5rem 0;">
       <div style="font-size:0.85rem;letter-spacing:0.4em;color:#c9a96e;font-weight:500;margin-bottom:0.2rem;">✦ SELVAGGIA</div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;">Cocina Mediterránea Premium</div>
-      <div style="width:30px;height:0.5px;background:#c9a96e;margin:0.7rem auto;"></div>
+      <div style="width:30px;height:0.5px;background:#c9a96e;margin:0.7rem auto 1.2rem;"></div>
+      <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Ingresa el código de tu mesa</div>
+      <input id="svClCodeInput" maxlength="6" placeholder="Ej: 298576" onkeydown="if(event.key==='Enter')svVerificarCodigo()" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:1.2rem;outline:none;text-align:center;letter-spacing:0.3em;font-weight:600;box-sizing:border-box;margin-bottom:0.8rem;"/>
+      <button onclick="svVerificarCodigo()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:0.8rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;margin-bottom:0.6rem;">Acceder a mi cuenta</button>
+      <div style="display:flex;align-items:center;gap:8px;margin:0.6rem 0;">
+        <div style="flex:1;height:0.5px;background:#2a2a22;"></div>
+        <span style="font-size:0.45rem;color:#4a4840;letter-spacing:0.1em;text-transform:uppercase;">o</span>
+        <div style="flex:1;height:0.5px;background:#2a2a22;"></div>
+      </div>
+      <button onclick="svAbrirScanner()" style="width:100%;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3m0 4h4v-4m-4 0h-3"/></svg>
+        Escanear QR con cámara
+      </button>
+      <p id="svClError" style="display:none;color:#c0392b;font-size:0.52rem;margin-top:0.7rem;letter-spacing:0.1em;">Código incorrecto</p>
     </div>
-    <div id="sv-empty-cliente" style="text-align:center;padding:2rem 0;">
-      <div style="font-size:0.6rem;color:#3a3830;letter-spacing:0.1em;">Esperando cuenta del mesero...</div>
-    </div>
-    <div id="sv-cuenta-activa" style="display:none;">
+    <div id="svClCuenta" style="display:none;">
       <div style="display:flex;align-items:center;margin-bottom:0.8rem;">
         <span style="width:7px;height:7px;background:#4caf50;border-radius:50%;display:inline-block;margin-right:5px;animation:svblink 1.2s infinite;"></span>
         <span style="font-size:0.5rem;letter-spacing:0.15em;color:#4caf50;text-transform:uppercase;">En vivo</span>
-        <span id="sv-mesa-cliente" style="margin-left:auto;font-size:0.5rem;letter-spacing:0.2em;color:#4a4840;text-transform:uppercase;"></span>
+        <span id="svClMesaLabel" style="margin-left:auto;font-size:0.5rem;letter-spacing:0.2em;color:#4a4840;text-transform:uppercase;"></span>
+        <button onclick="svSalirCuenta()" style="background:none;border:none;color:#4a4840;font-size:0.45rem;cursor:pointer;margin-left:8px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Montserrat',sans-serif;">Salir</button>
       </div>
-      <div id="sv-qr-section" style="display:none;margin-bottom:0.8rem;">
-        <div style="background:#111109;border:0.5px solid #2a2a22;border-radius:8px;padding:1rem;text-align:center;">
-          <div id="sv-qr-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;width:90px;margin:0 auto 0.7rem;"></div>
-          <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;">Escanea para pagar</div>
-        </div>
-      </div>
-      <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Detalle de tu cuenta</div>
-      <div id="sv-lista-cliente"></div>
-      <div id="sv-empty-cuenta" style="display:none;font-size:0.65rem;color:#3a3830;text-align:center;padding:0.6rem 0;">El mesero aún no ha registrado platillos</div>
+      <div id="svClItems"></div>
+      <div id="svClEmpty" style="display:none;font-size:0.62rem;color:#3a3830;text-align:center;padding:0.5rem 0;">Esperando platillos...</div>
       <div style="background:#111109;border:0.5px solid #2a2a22;border-radius:8px;padding:0.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;margin:0.8rem 0;">
         <span style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;">Total a pagar</span>
-        <span id="sv-total-cliente" style="font-size:1.2rem;color:#c9a96e;font-weight:600;">$0</span>
+        <span id="svClTotal" style="font-size:1.1rem;color:#c9a96e;font-weight:600;">$0</span>
       </div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Número de tarjeta</div>
-      <input placeholder="0000  0000  0000  0000" maxlength="19" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;margin-bottom:0.7rem;outline:none;" />
+      <input placeholder="0000  0000  0000  0000" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;margin-bottom:0.7rem;"/>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0.7rem;">
-        <div>
-          <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Vencimiento</div>
-          <input placeholder="MM / AA" maxlength="5" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;outline:none;" />
-        </div>
-        <div>
-          <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">CVV</div>
-          <input placeholder="···" maxlength="4" type="password" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;outline:none;" />
-        </div>
+        <div><div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Vencimiento</div><input placeholder="MM / AA" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;"/></div>
+        <div><div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">CVV</div><input placeholder="···" type="password" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;"/></div>
       </div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Nombre en la tarjeta</div>
-      <input placeholder="Como aparece en la tarjeta" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;margin-bottom:0.8rem;outline:none;" />
-      <button onclick="svPagarDemo()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:1rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Pagar ahora</button>
-      <div style="text-align:center;margin-top:0.7rem;font-size:0.45rem;color:#4a4840;letter-spacing:0.1em;text-transform:uppercase;">🔒 Pago seguro SSL</div>
+      <input placeholder="Como aparece en la tarjeta" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;margin-bottom:0.8rem;"/>
+      <button style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:1rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Pagar ahora</button>
+      <div style="text-align:center;margin-top:0.7rem;font-size:0.45rem;color:#4a4840;text-transform:uppercase;">🔒 Pago seguro SSL</div>
     </div>
   </div>
-
 </div>
+</div>
+
+<!-- SCANNER OVERLAY -->
+<div id="svScannerOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:1rem;">
+  <div style="font-size:0.85rem;letter-spacing:0.4em;color:#c9a96e;margin-bottom:0.5rem;font-weight:500;font-family:'Montserrat',sans-serif;">✦ SELVAGGIA</div>
+  <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;font-family:'Montserrat',sans-serif;">Apunta al código QR de tu mesa</div>
+  <div style="position:relative;width:100%;max-width:300px;border-radius:12px;overflow:hidden;border:2px solid #c9a96e;">
+    <video id="svQRVideo" style="width:100%;display:block;" playsinline autoplay></video>
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#c9a96e;animation:svScan 2s linear infinite;opacity:0.8;"></div>
+    <canvas id="svQRCanvas" style="display:none;"></canvas>
+  </div>
+  <p id="svScanStatus" style="font-size:0.55rem;color:#6a6050;text-align:center;margin-top:0.8rem;letter-spacing:0.1em;max-width:280px;font-family:'Montserrat',sans-serif;">Buscando código QR...</p>
+  <button onclick="svCerrarScanner()" style="margin-top:1rem;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem 2rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Cancelar</button>
+</div>
+
+<!-- CONTRASEÑA OVERLAY -->
+<div id="svPassOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:12px;padding:1.8rem;width:90%;max-width:300px;font-family:'Montserrat',sans-serif;">
+    <div style="font-size:0.85rem;letter-spacing:0.4em;color:#c9a96e;text-align:center;margin-bottom:0.2rem;">✦ SELVAGGIA</div>
+    <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;text-align:center;margin-bottom:1rem;">Acceso Mesero</div>
+    <div style="width:30px;height:0.5px;background:#c9a96e;margin:0 auto 1.2rem;"></div>
+    <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Contraseña</div>
+    <input id="svPassInput" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')svVerificarPass()" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;margin-bottom:0.8rem;"/>
+    <p id="svPassError" style="display:none;color:#c0392b;font-size:0.5rem;text-align:center;margin-bottom:0.7rem;">Contraseña incorrecta</p>
+    <button onclick="svVerificarPass()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:0.8rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;margin-bottom:0.6rem;">Entrar</button>
+    <button onclick="document.getElementById('svPassOverlay').style.display='none'" style="width:100%;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Cancelar</button>
+  </div>
 </div>
 
 <style>
 @keyframes svblink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+@keyframes svScan{0%{top:0;}100%{top:100%;}}
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
 <script>
+const SV_PASS='selvaggia2025';
+const SV_TOTAL_MESAS=30;
 const SV_MENU={
   'Cortes':[{n:'Tomahawk 1kg',p:3120},{n:'Vacío 400g',p:960},{n:'Vacío 1kg',p:2490},{n:'New York 350g',p:760},{n:'Porterhouse 1kg',p:2100},{n:'Filete Australiano 250g',p:890}],
   'Guarniciones':[{n:'Papas Trufadas',p:315},{n:'Puré Selvaggia',p:115},{n:'Vegetales al Grill con Pesto',p:245},{n:'Ensalada Mediterránea',p:110},{n:'Patatas Selvaggia',p:85},{n:'Zanahorias Rostizadas con Tahini',p:120}],
@@ -2372,126 +2383,233 @@ const SV_MENU={
   'Coctelería':[{n:'Old Fashioned',p:220},{n:'Negroni',p:250},{n:'Manhattan',p:240},{n:'Dry Martini',p:250},{n:'Vesper Martini',p:250},{n:'Cosmopolitan',p:240},{n:'Moscow Mule',p:230},{n:'French 75',p:220},{n:'Sidecar',p:270},{n:'Sazerac',p:250},{n:'Mezcal Rubí',p:250},{n:'Raíz de Jaguar',p:250},{n:'Tigre Amarillo',p:250},{n:'Midnight Boulevardier',p:230},{n:'Nior de Lychee',p:210},{n:'Espresso Martini',p:180},{n:'After Selvaggia',p:190},{n:'Carajillo',p:180},{n:'Canija',p:180}],
   'Infantil':[{n:'Slider Infantil',p:180},{n:'Fusilli Infantil',p:125},{n:'Pechuga de Pollo a la Plancha',p:155}]
 };
+let svMesas={},svMesaActiva=null,svCatActiva=null,svClMesaActiva=null,svScanInterval=null,svVideoStream=null;
 
-let svItems=[],svTotal=0,svCatActiva=null,svQrGenerado=false;
+function svGenerarCodigo(){return String(Math.floor(100000+Math.random()*900000));}
 
-function svTab(tab){
-  document.getElementById('sv-panel-mesero').style.display=tab==='mesero'?'block':'none';
-  document.getElementById('sv-panel-cliente').style.display=tab==='cliente'?'block':'none';
-  document.getElementById('tab-mesero').style.color=tab==='mesero'?'#c9a96e':'#6a6050';
-  document.getElementById('tab-mesero').style.borderBottom=tab==='mesero'?'1px solid #c9a96e':'0.5px solid #2a2a22';
-  document.getElementById('tab-cliente').style.color=tab==='cliente'?'#c9a96e':'#6a6050';
-  document.getElementById('tab-cliente').style.borderBottom=tab==='cliente'?'1px solid #c9a96e':'0.5px solid #2a2a22';
+function svGenerarQR(codigo){
+  const cont=document.getElementById('svQRContainer');
+  cont.innerHTML='';
+  new QRCode(cont,{text:codigo,width:100,height:100,colorDark:'#c9a96e',colorLight:'#111109',correctLevel:QRCode.CorrectLevel.H});
 }
 
-function svActualizarMesa(){
-  const m=document.getElementById('sv-mesa').value;
-  document.getElementById('sv-mesa-label').textContent='Mesa '+m;
-  document.getElementById('sv-mesa-cliente').textContent='Mesa '+m;
+function svRenderMesas(){
+  const grid=document.getElementById('svMesaGrid');
+  grid.innerHTML='';
+  for(let i=1;i<=SV_TOTAL_MESAS;i++){
+    const ocupada=svMesas[i]&&svMesas[i].activa;
+    const btn=document.createElement('button');
+    btn.style.cssText=`aspect-ratio:1;border-radius:8px;border:0.5px solid ${ocupada?'#c9a96e':'#2a2a22'};background:${ocupada?'#0f0f0d':'#111109'};cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:'Montserrat',sans-serif;position:relative;`;
+    btn.innerHTML=`${ocupada?'<span style="position:absolute;top:3px;right:5px;color:#c9a96e;font-size:7px;">●</span>':''}<span style="font-size:0.75rem;font-weight:600;color:${ocupada?'#c9a96e':'#e8e0d0'};">${i}</span><span style="font-size:0.38rem;letter-spacing:0.1em;text-transform:uppercase;color:${ocupada?'#c9a96e':'#4a4840'};">${ocupada?'Ocupada':'Libre'}</span>`;
+    btn.onclick=()=>svSeleccionarMesa(i);
+    grid.appendChild(btn);
+  }
 }
 
-function svRenderCategorias(){
-  document.getElementById('sv-categorias').innerHTML=Object.keys(SV_MENU).map(cat=>
-    `<button onclick="svToggleCat('${cat}')" style="background:none;border:0.5px solid ${svCatActiva===cat?'#c9a96e':'#2a2a22'};border-radius:6px;padding:0.4rem 0.7rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:${svCatActiva===cat?'#c9a96e':'#6a6050'};cursor:pointer;white-space:nowrap;">${cat}</button>`
+function svSeleccionarMesa(num){
+  svMesaActiva=num;
+  if(!svMesas[num]||!svMesas[num].activa)svMesas[num]={activa:true,codigo:svGenerarCodigo(),items:[],total:0};
+  document.getElementById('svComandaTitle').textContent='Mesa '+num;
+  document.getElementById('svCodigoMesa').textContent=svMesas[num].codigo;
+  svGenerarQR(svMesas[num].codigo);
+  svRenderComanda();svRenderCats();
+  document.getElementById('svVistaMesas').style.display='none';
+  document.getElementById('svVistaComanda').style.display='block';
+  svRenderMesas();
+}
+
+function svVolverMesas(){
+  document.getElementById('svVistaMesas').style.display='block';
+  document.getElementById('svVistaComanda').style.display='none';
+  svCatActiva=null;
+}
+
+function svRenderCats(){
+  document.getElementById('svCats').innerHTML=Object.keys(SV_MENU).map(cat=>
+    `<button onclick="svToggleCat('${cat}')" style="background:none;border:0.5px solid ${svCatActiva===cat?'#c9a96e':'#2a2a22'};border-radius:6px;padding:0.38rem 0.65rem;font-family:'Montserrat',sans-serif;font-size:0.44rem;letter-spacing:0.1em;text-transform:uppercase;color:${svCatActiva===cat?'#c9a96e':'#6a6050'};cursor:pointer;white-space:nowrap;">${cat}</button>`
   ).join('');
 }
 
 function svToggleCat(cat){
-  const lista=document.getElementById('sv-platillos-lista');
+  const lista=document.getElementById('svPlats');
   if(svCatActiva===cat){svCatActiva=null;lista.style.display='none';lista.innerHTML='';}
   else{
-    svCatActiva=cat;
-    lista.style.display='block';
+    svCatActiva=cat;lista.style.display='block';
     lista.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">'+SV_MENU[cat].map(p=>
-      `<button onclick="svAgregar('${p.n.replace(/'/g,"\\'")}',${p.p})" style="text-align:left;background:#111109;border:0.5px solid #1a1a14;border-radius:6px;padding:0.5rem 0.7rem;font-family:'Montserrat',sans-serif;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:4px;">
-        <span style="font-size:0.6rem;color:#b0a890;flex:1;line-height:1.3;">${p.n}</span>
-        <span style="font-size:0.6rem;color:#c9a96e;font-weight:500;white-space:nowrap;">$${p.p.toLocaleString()}</span>
+      `<button onclick="svAgregar('${p.n.replace(/'/g,"\\'")}',${p.p})" style="text-align:left;background:#111109;border:0.5px solid #1a1a14;border-radius:6px;padding:0.45rem 0.65rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:4px;font-family:'Montserrat',sans-serif;">
+        <span style="font-size:0.58rem;color:#b0a890;flex:1;line-height:1.3;">${p.n}</span>
+        <span style="font-size:0.58rem;color:#c9a96e;font-weight:500;white-space:nowrap;">$${p.p.toLocaleString()}</span>
       </button>`
     ).join('')+'</div>';
   }
-  svRenderCategorias();
+  svRenderCats();
 }
 
 function svAgregar(nombre,precio){
-  svItems.push({nombre,precio});
-  svRenderItems();svSincronizar();
+  svMesas[svMesaActiva].items.push({nombre,precio});
+  svMesas[svMesaActiva].total+=precio;
+  svRenderComanda();
+  if(svClMesaActiva===svMesaActiva)svRenderCuentaCliente();
   svToast(nombre+' agregado');
 }
 
 function svAgregarManual(){
-  const n=document.getElementById('sv-platillo-input').value.trim();
-  const p=parseInt(document.getElementById('sv-precio-input').value);
+  const n=document.getElementById('svPlatInput').value.trim();
+  const p=parseInt(document.getElementById('svPrecInput').value);
   if(!n||!p||p<=0)return;
-  svItems.push({nombre:n,precio:p});
-  document.getElementById('sv-platillo-input').value='';
-  document.getElementById('sv-precio-input').value='';
-  svRenderItems();svSincronizar();svToast(n+' agregado');
+  svMesas[svMesaActiva].items.push({nombre:n,precio:p});
+  svMesas[svMesaActiva].total+=p;
+  document.getElementById('svPlatInput').value='';
+  document.getElementById('svPrecInput').value='';
+  svRenderComanda();
+  if(svClMesaActiva===svMesaActiva)svRenderCuentaCliente();
+  svToast(n+' agregado');
 }
 
-function svRenderItems(){
-  svTotal=svItems.reduce((s,i)=>s+i.precio,0);
-  const lista=document.getElementById('sv-lista-items');
-  const empty=document.getElementById('sv-empty-msg');
-  if(svItems.length===0){lista.innerHTML='';empty.style.display='block';document.getElementById('sv-total-mesero').textContent='$0';return;}
+function svRenderComanda(){
+  const m=svMesas[svMesaActiva];
+  const lista=document.getElementById('svListaComanda');
+  const empty=document.getElementById('svEmptyComanda');
+  if(!m||m.items.length===0){lista.innerHTML='';empty.style.display='block';document.getElementById('svTotalComanda').textContent='$0';return;}
   empty.style.display='none';
-  lista.innerHTML=svItems.map((item,idx)=>`
+  lista.innerHTML=m.items.map((item,idx)=>`
     <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:0.5px solid #1a1a14;gap:8px;">
-      <span style="font-size:0.68rem;color:#b0a890;flex:1;">${item.nombre}</span>
-      <span style="font-size:0.68rem;color:#c9a96e;font-weight:500;">$${item.precio.toLocaleString()}</span>
-      <button onclick="svEliminar(${idx})" style="background:none;border:none;color:#3a3830;cursor:pointer;font-size:13px;padding:0 4px;">✕</button>
+      <span style="font-size:0.65rem;color:#b0a890;flex:1;">${item.nombre}</span>
+      <span style="font-size:0.65rem;color:#c9a96e;font-weight:500;">$${item.precio.toLocaleString()}</span>
+      <button onclick="svEliminarItem(${idx})" style="background:none;border:none;color:#3a3830;cursor:pointer;font-size:12px;padding:0 3px;">✕</button>
     </div>`).join('');
-  document.getElementById('sv-total-mesero').textContent='$'+svTotal.toLocaleString();
+  document.getElementById('svTotalComanda').textContent='$'+m.total.toLocaleString();
 }
 
-function svEliminar(idx){svItems.splice(idx,1);svRenderItems();svSincronizar();}
+function svEliminarItem(idx){
+  const m=svMesas[svMesaActiva];
+  m.total-=m.items[idx].precio;
+  m.items.splice(idx,1);
+  svRenderComanda();
+  if(svClMesaActiva===svMesaActiva)svRenderCuentaCliente();
+}
 
-function svSincronizar(){
-  document.getElementById('sv-empty-cliente').style.display='none';
-  document.getElementById('sv-cuenta-activa').style.display='block';
-  const lista=document.getElementById('sv-lista-cliente');
-  const empty=document.getElementById('sv-empty-cuenta');
-  if(svItems.length===0){lista.innerHTML='';empty.style.display='block';}
+function svEnviarCliente(){
+  if(!svMesas[svMesaActiva]||svMesas[svMesaActiva].items.length===0){svToast('Agrega al menos un platillo');return;}
+  svToast('Cuenta enviada al cliente ✓');
+}
+
+function svLimpiarMesa(){
+  if(svMesas[svMesaActiva])svMesas[svMesaActiva]={activa:false,codigo:null,items:[],total:0};
+  if(svClMesaActiva===svMesaActiva){svClMesaActiva=null;svSalirCuenta();}
+  svRenderMesas();svVolverMesas();
+}
+
+function svVerificarCodigo(codigoParam){
+  const codigo=codigoParam||document.getElementById('svClCodeInput').value.trim();
+  let encontrada=null;
+  for(let num in svMesas){if(svMesas[num].activa&&svMesas[num].codigo===codigo){encontrada=parseInt(num);break;}}
+  if(encontrada){
+    svClMesaActiva=encontrada;
+    document.getElementById('svClError').style.display='none';
+    document.getElementById('svClLogin').style.display='none';
+    document.getElementById('svClCuenta').style.display='block';
+    document.getElementById('svClMesaLabel').textContent='Mesa '+encontrada;
+    svRenderCuentaCliente();
+  } else {
+    document.getElementById('svClError').style.display='block';
+  }
+}
+
+function svAbrirScanner(){
+  const overlay=document.getElementById('svScannerOverlay');
+  overlay.style.display='flex';
+  document.getElementById('svScanStatus').textContent='Iniciando cámara...';
+  const video=document.getElementById('svQRVideo');
+  const canvas=document.getElementById('svQRCanvas');
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})
+    .then(stream=>{
+      svVideoStream=stream;
+      video.srcObject=stream;
+      video.play();
+      document.getElementById('svScanStatus').textContent='Apunta al código QR de tu mesa...';
+      const ctx=canvas.getContext('2d');
+      svScanInterval=setInterval(()=>{
+        if(video.readyState===video.HAVE_ENOUGH_DATA){
+          canvas.width=video.videoWidth;
+          canvas.height=video.videoHeight;
+          ctx.drawImage(video,0,0,canvas.width,canvas.height);
+          const imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+          const code=jsQR(imageData.data,imageData.width,imageData.height,{inversionAttempts:'dontInvert'});
+          if(code&&/^\d{6}$/.test(code.data)){
+            svCerrarScanner();
+            document.getElementById('svClCodeInput').value=code.data;
+            svVerificarCodigo(code.data);
+          }
+        }
+      },200);
+    })
+    .catch(()=>{document.getElementById('svScanStatus').textContent='No se pudo acceder a la cámara. Usa el código manual.';});
+}
+
+function svCerrarScanner(){
+  if(svVideoStream)svVideoStream.getTracks().forEach(t=>t.stop());
+  clearInterval(svScanInterval);
+  svVideoStream=null;
+  document.getElementById('svScannerOverlay').style.display='none';
+}
+
+function svRenderCuentaCliente(){
+  const m=svMesas[svClMesaActiva];
+  if(!m)return;
+  const items=document.getElementById('svClItems');
+  const empty=document.getElementById('svClEmpty');
+  if(m.items.length===0){items.innerHTML='';empty.style.display='block';}
   else{
     empty.style.display='none';
-    lista.innerHTML=svItems.map(item=>`
+    items.innerHTML=m.items.map(item=>`
       <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:0.5px solid #1a1a14;gap:8px;">
-        <span style="font-size:0.68rem;color:#b0a890;flex:1;">${item.nombre}</span>
-        <span style="font-size:0.68rem;color:#c9a96e;font-weight:500;">$${item.precio.toLocaleString()}</span>
+        <span style="font-size:0.65rem;color:#b0a890;flex:1;">${item.nombre}</span>
+        <span style="font-size:0.65rem;color:#c9a96e;font-weight:500;">$${item.precio.toLocaleString()}</span>
       </div>`).join('');
   }
-  document.getElementById('sv-total-cliente').textContent='$'+svTotal.toLocaleString();
+  document.getElementById('svClTotal').textContent='$'+m.total.toLocaleString();
 }
 
-function svGenerarQR(){
-  if(svItems.length===0){svToast('Agrega al menos un platillo');return;}
-  svQrGenerado=true;
-  const p=[1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1,0,1,0,1,1,1,1,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,0,1,1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,1,0,1,1,1,0,0,0,1,0,1,1,1,1,1,1,1,0,0,0,0,1,1,0,0,0,1,0,0,1,0,1,0,0,1,0,1,1,0,1,1,0,0,1,0,1,1,0,1,0,0,1,1,0,0,1,0,0,1,0,1,1,1,0,0,1,0,0,1,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,0,1,0,0,1,0,1,0,1,0,0,0,1,0,0,1,1,1,1,1,1,1,0,1,0,0,1,0,1,1,0,1,0,1,0,0,0,1,0,1,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,0,1,1,0,1,1];
-  document.getElementById('sv-qr-grid').innerHTML=p.map(v=>`<div style="width:100%;aspect-ratio:1;border-radius:1px;background:${v?'#c9a96e':'#1a1a14'};"></div>`).join('');
-  document.getElementById('sv-qr-section').style.display='block';
-  svSincronizar();
-  svToast('QR generado — ve a pestaña Cliente');
+function svSalirCuenta(){
+  svClMesaActiva=null;
+  document.getElementById('svClLogin').style.display='block';
+  document.getElementById('svClCuenta').style.display='none';
+  document.getElementById('svClCodeInput').value='';
 }
 
-function svLimpiar(){
-  svItems=[];svTotal=0;svQrGenerado=false;svCatActiva=null;
-  svRenderItems();svRenderCategorias();
-  document.getElementById('sv-platillos-lista').style.display='none';
-  document.getElementById('sv-platillos-lista').innerHTML='';
-  document.getElementById('sv-qr-section').style.display='none';
-  document.getElementById('sv-cuenta-activa').style.display='none';
-  document.getElementById('sv-empty-cliente').style.display='block';
+function svPedirPass(){
+  document.getElementById('svPassOverlay').style.display='flex';
+  document.getElementById('svPassInput').value='';
+  document.getElementById('svPassError').style.display='none';
+  setTimeout(()=>document.getElementById('svPassInput').focus(),100);
 }
 
-function svPagarDemo(){svToast('Demo: Pago procesado exitosamente');}
+function svVerificarPass(){
+  if(document.getElementById('svPassInput').value===SV_PASS){
+    document.getElementById('svPassOverlay').style.display='none';
+    svSetTab('mesero');
+    svRenderMesas();
+  } else {
+    document.getElementById('svPassError').style.display='block';
+  }
+}
+
+function svSetTab(tab){
+  document.getElementById('svPanelMesero').style.display=tab==='mesero'?'block':'none';
+  document.getElementById('svPanelCliente').style.display=tab==='cliente'?'block':'none';
+  document.getElementById('svTabM').style.color=tab==='mesero'?'#c9a96e':'#6a6050';
+  document.getElementById('svTabM').style.borderBottom=tab==='mesero'?'1px solid #c9a96e':'0.5px solid #2a2a22';
+  document.getElementById('svTabC').style.color=tab==='cliente'?'#c9a96e':'#6a6050';
+  document.getElementById('svTabC').style.borderBottom=tab==='cliente'?'1px solid #c9a96e':'0.5px solid #2a2a22';
+}
 
 function svToast(msg){
-  let t=document.getElementById('sv-toast');
-  if(!t){t=document.createElement('div');t.id='sv-toast';t.style.cssText='display:none;position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#1a1a14;border:0.5px solid #c9a96e;border-radius:8px;padding:0.7rem 1.2rem;font-family:Montserrat,sans-serif;font-size:0.62rem;color:#c9a96e;letter-spacing:0.1em;z-index:99999;text-align:center;max-width:280px;';document.body.appendChild(t);}
+  let t=document.getElementById('svToastEl');
+  if(!t){t=document.createElement('div');t.id='svToastEl';t.style.cssText='display:none;position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#1a1a14;border:0.5px solid #c9a96e;border-radius:8px;padding:0.7rem 1.2rem;font-family:Montserrat,sans-serif;font-size:0.6rem;color:#c9a96e;z-index:99999;';document.body.appendChild(t);}
   t.textContent=msg;t.style.display='block';
   setTimeout(()=>t.style.display='none',2000);
 }
-
-svRenderCategorias();
 </script>
   
 <!-- AI Float Button -->
