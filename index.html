@@ -2235,103 +2235,107 @@ select option { color: var(--cream); background: #1a1a16; }
     <span class="footer-copy" style="opacity:0.5;">Diseñado con excelencia</span>
   </div>
 </footer>
+  
 <!-- BOTÓN FLOTANTE PAGAR -->
 <div style="position:fixed;bottom:2rem;right:2rem;z-index:999;display:flex;flex-direction:column;align-items:center;gap:4px;">
-  <button onclick="document.getElementById('svModal').style.display='flex'" style="width:56px;height:56px;background:#c9a96e;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+  <button onclick="document.getElementById('pagoModal').style.display='flex'" style="width:56px;height:56px;background:#c9a96e;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
     <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#0a0a08" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
   </button>
   <span style="font-family:'Montserrat',sans-serif;font-size:0.42rem;letter-spacing:0.15em;color:#c9a96e;text-transform:uppercase;">Pagar</span>
 </div>
+
 <!-- MODAL SISTEMA DE PAGO SELVAGGIA -->
-<div id="svModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;">
-<div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:16px;width:100%;max-width:480px;font-family:'Montserrat',sans-serif;overflow-y:auto;max-height:90vh;margin:auto;position:relative;">
+<div id="pagoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9998;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;">
+<div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:16px;width:100%;max-width:480px;font-family:'Montserrat',sans-serif;overflow:hidden;margin:auto;position:relative;">
+
+  <button onclick="document.getElementById('pagoModal').style.display='none'" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;z-index:10;">✕</button>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid #2a2a22;">
-    <button id="svTabM" onclick="svPedirPass()" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#6a6050;border:none;border-bottom:0.5px solid #2a2a22;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">🔒 Mesero</button>
-    <button id="svTabC" onclick="svSetTab('cliente')" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a96e;border:none;border-bottom:1px solid #c9a96e;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">Cliente</button>
+    <button id="sv-tab-m" onclick="svPedirPass()" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#6a6050;border:none;border-bottom:0.5px solid #2a2a22;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">🔒 Mesero</button>
+    <button id="sv-tab-c" onclick="svSetTab('cliente')" style="padding:1rem;text-align:center;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a96e;border:none;border-bottom:1px solid #c9a96e;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;">Cliente</button>
   </div>
 
   <!-- PANEL MESERO -->
-  <div id="svPanelMesero" style="display:none;padding:1.2rem;">
-    <button onclick="document.getElementById('svModal').style.display='none'" style="position:absolute;top:0.8rem;right:0.8rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;">✕</button>
-    <div id="svVistaMesas">
+  <div id="sv-panel-mesero" style="display:none;padding:1.2rem;">
+    <div id="sv-vista-mesas">
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Selecciona una mesa</div>
-      <div id="svMesaGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem;"></div>
-      <div style="font-size:0.48rem;color:#4a4840;"><span style="color:#c9a96e;">●</span> Ocupada &nbsp;<span style="color:#3a3830;">●</span> Libre</div>
+      <div id="sv-mesa-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem;"></div>
+      <div style="display:flex;align-items:center;gap:10px;font-size:0.48rem;color:#4a4840;">
+        <span style="color:#c9a96e;">●</span> Ocupada &nbsp;<span style="color:#3a3830;">●</span> Libre
+      </div>
     </div>
-    <div id="svVistaComanda" style="display:none;">
+    <div id="sv-vista-comanda" style="display:none;">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
         <button onclick="svVolverMesas()" style="background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.4rem 0.7rem;font-family:'Montserrat',sans-serif;font-size:0.48rem;color:#6a6050;cursor:pointer;">← Mesas</button>
-        <div style="font-size:0.65rem;color:#c9a96e;font-weight:500;" id="svComandaTitle">Mesa 1</div>
+        <div style="font-size:0.65rem;color:#c9a96e;font-weight:500;" id="sv-comanda-title">Mesa 1</div>
       </div>
       <div style="background:#111109;border:1px solid #c9a96e;border-radius:10px;padding:1rem;text-align:center;margin:0.8rem 0;">
         <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Código único del cliente</div>
-        <div id="svCodigoMesa" style="font-size:2rem;font-weight:600;color:#c9a96e;letter-spacing:0.3em;">------</div>
+        <div id="sv-codigo-mesa" style="font-size:2rem;font-weight:600;color:#c9a96e;letter-spacing:0.3em;">------</div>
         <div style="font-size:0.45rem;color:#4a4840;margin-top:4px;letter-spacing:0.1em;">Muéstrale este QR al cliente</div>
-        <div id="svQRContainer" style="margin-top:0.8rem;display:flex;justify-content:center;background:#c9a96e;padding:10px;border-radius:10px;">
+        <div id="sv-qr-container" style="margin-top:0.8rem;display:flex;justify-content:center;align-items:center;"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 65px auto;gap:5px;margin-bottom:0.8rem;align-items:end;">
-        <input id="svPlatInput" placeholder="Platillo" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.8rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
-        <input id="svPrecInput" placeholder="$" type="number" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.8rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
-        <button onclick="svAgregarManual()" style="background:#c9a96e;border:none;border-radius:6px;padding:0.6rem 0.7rem;font-family:'Montserrat',sans-serif;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;white-space:nowrap;">+ Add</button>
+        <input id="sv-plat-input" placeholder="Platillo" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
+        <input id="sv-prec-input" placeholder="$" type="number" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
+        <button onclick="svAgregarManual()" style="background:#c9a96e;border:none;border-radius:6px;padding:0.6rem 0.7rem;font-family:'Montserrat',sans-serif;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;white-space:nowrap;">+ Add</button>
       </div>
-      <div id="svCats" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:0.7rem;"></div>
-      <div id="svPlats" style="display:none;margin-bottom:0.7rem;max-height:180px;overflow-y:auto;"></div>
-      <div id="svListaComanda"></div>
-      <div id="svEmptyComanda" style="font-size:0.62rem;color:#3a3830;text-align:center;padding:0.5rem 0;">Agrega platillos</div>
+      <div id="sv-cats" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:0.7rem;"></div>
+      <div id="sv-plats" style="display:none;margin-bottom:0.7rem;max-height:200px;overflow-y:auto;"></div>
+      <div id="sv-lista-comanda"></div>
+      <div id="sv-empty-comanda" style="font-size:0.62rem;color:#3a3830;text-align:center;padding:0.5rem 0;">Agrega platillos</div>
       <div style="background:#111109;border:0.5px solid #2a2a22;border-radius:8px;padding:0.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;margin:0.8rem 0;">
         <span style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;">Total</span>
-        <span id="svTotalComanda" style="font-size:1.1rem;color:#c9a96e;font-weight:600;">$0</span>
+        <span id="sv-total-comanda" style="font-size:1.1rem;color:#c9a96e;font-weight:600;">$0</span>
       </div>
       <div style="display:flex;gap:6px;">
-        <button onclick="svLimpiarMesa()" style="flex:1;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Limpiar</button>
-        <button onclick="svEnviarCliente()" style="flex:2;background:#c9a96e;border:none;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Enviar al cliente ↗</button>
+        <button onclick="svLimpiarMesa()" style="flex:1;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Limpiar</button>
+        <button onclick="svEnviarCliente()" style="flex:2;background:#c9a96e;border:none;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.46rem;letter-spacing:0.15em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Enviar al cliente ↗</button>
       </div>
     </div>
   </div>
 
   <!-- PANEL CLIENTE -->
-  id="svPanelCliente" style="display:block;padding:1.2rem;overflow-y:auto;">
-    <button onclick="document.getElementById('svModal').style.display='none'" style="position:absolute;top:0.8rem;right:0.8rem;background:none;border:none;color:#6a6050;font-size:1.1rem;cursor:pointer;">✕</button>
-    <div id="svClLogin" style="text-align:center;padding:0.5rem 0;">
+  <div id="sv-panel-cliente" style="display:block;padding:1.2rem;">
+    <div id="sv-cl-login" style="text-align:center;padding:0.5rem 0;">
       <div style="font-size:0.85rem;letter-spacing:0.4em;color:#c9a96e;font-weight:500;margin-bottom:0.2rem;">✦ SELVAGGIA</div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;">Cocina Mediterránea Premium</div>
       <div style="width:30px;height:0.5px;background:#c9a96e;margin:0.7rem auto 1.2rem;"></div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Ingresa el código de tu mesa</div>
-      <input id="svClCodeInput" maxlength="6" placeholder="Ej: 298576" onkeydown="if(event.key==='Enter')svVerificarCodigo()" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:1.2rem;outline:none;text-align:center;letter-spacing:0.3em;font-weight:600;box-sizing:border-box;margin-bottom:0.8rem;"/>
-      <button onclick="svVerificarCodigo()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:0.8rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;margin-bottom:0.6rem;">Acceder a mi cuenta</button>
+      <input id="sv-cl-code" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:1.2rem;letter-spacing:0.3em;font-weight:600;text-align:center;outline:none;margin-bottom:0.8rem;" placeholder="Ej: 298576" maxlength="6" onkeydown="if(event.key==='Enter')svVerificarCodigo()" />
+      <button onclick="svVerificarCodigo()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:0.7rem;font-family:'Montserrat',sans-serif;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;margin-bottom:0.6rem;">Acceder a mi cuenta</button>
       <div style="display:flex;align-items:center;gap:8px;margin:0.6rem 0;">
         <div style="flex:1;height:0.5px;background:#2a2a22;"></div>
         <span style="font-size:0.45rem;color:#4a4840;letter-spacing:0.1em;text-transform:uppercase;">o</span>
         <div style="flex:1;height:0.5px;background:#2a2a22;"></div>
       </div>
-      <button onclick="svAbrirScanner()" style="width:100%;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+      <button onclick="svAbrirScanner()" style="width:100%;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3m0 4h4v-4m-4 0h-3"/></svg>
         Escanear QR con cámara
       </button>
-      <p id="svClError" style="display:none;color:#c0392b;font-size:0.52rem;margin-top:0.7rem;letter-spacing:0.1em;">Código incorrecto</p>
+      <p id="sv-cl-error" style="display:none;color:#c0392b;font-size:0.52rem;margin-top:0.7rem;letter-spacing:0.1em;">Código incorrecto</p>
     </div>
-    <div id="svClCuenta" style="display:none;">
+    <div id="sv-cl-cuenta" style="display:none;">
       <div style="display:flex;align-items:center;margin-bottom:0.8rem;">
         <span style="width:7px;height:7px;background:#4caf50;border-radius:50%;display:inline-block;margin-right:5px;animation:svblink 1.2s infinite;"></span>
         <span style="font-size:0.5rem;letter-spacing:0.15em;color:#4caf50;text-transform:uppercase;">En vivo</span>
-        <span id="svClMesaLabel" style="margin-left:auto;font-size:0.5rem;letter-spacing:0.2em;color:#4a4840;text-transform:uppercase;"></span>
+        <span id="sv-cl-mesa-label" style="margin-left:auto;font-size:0.5rem;letter-spacing:0.2em;color:#4a4840;text-transform:uppercase;"></span>
         <button onclick="svSalirCuenta()" style="background:none;border:none;color:#4a4840;font-size:0.45rem;cursor:pointer;margin-left:8px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Montserrat',sans-serif;">Salir</button>
       </div>
-      <div id="svClItems"></div>
-      <div id="svClEmpty" style="display:none;font-size:0.62rem;color:#3a3830;text-align:center;padding:0.5rem 0;">Esperando platillos...</div>
+      <div id="sv-cl-items"></div>
+      <div id="sv-cl-empty" style="display:none;font-size:0.62rem;color:#3a3830;text-align:center;padding:0.5rem 0;">Esperando platillos...</div>
       <div style="background:#111109;border:0.5px solid #2a2a22;border-radius:8px;padding:0.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;margin:0.8rem 0;">
         <span style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;">Total a pagar</span>
-        <span id="svClTotal" style="font-size:1.1rem;color:#c9a96e;font-weight:600;">$0</span>
+        <span id="sv-cl-total" style="font-size:1.1rem;color:#c9a96e;font-weight:600;">$0</span>
       </div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Número de tarjeta</div>
-      <input placeholder="0000  0000  0000  0000" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;margin-bottom:0.7rem;"/>
+      <input placeholder="0000  0000  0000  0000" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;margin-bottom:0.7rem;outline:none;"/>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0.7rem;">
-        <div><div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Vencimiento</div><input placeholder="MM / AA" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;"/></div>
-        <div><div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">CVV</div><input placeholder="···" type="password" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;"/></div>
+        <div><div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Vencimiento</div><input placeholder="MM / AA" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;outline:none;"/></div>
+        <div><div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">CVV</div><input placeholder="···" type="password" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;outline:none;"/></div>
       </div>
       <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:5px;">Nombre en la tarjeta</div>
-      <input placeholder="Como aparece en la tarjeta" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;margin-bottom:0.8rem;"/>
+      <input placeholder="Como aparece en la tarjeta" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.78rem;box-sizing:border-box;margin-bottom:0.8rem;outline:none;"/>
       <button style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:1rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;">Pagar ahora</button>
       <div style="text-align:center;margin-top:0.7rem;font-size:0.45rem;color:#4a4840;text-transform:uppercase;">🔒 Pago seguro SSL</div>
     </div>
@@ -2340,29 +2344,29 @@ select option { color: var(--cream); background: #1a1a16; }
 </div>
 
 <!-- SCANNER OVERLAY -->
-<div id="svScannerOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:1rem;">
+<div id="sv-scanner-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:1rem;">
   <div style="font-size:0.85rem;letter-spacing:0.4em;color:#c9a96e;margin-bottom:0.5rem;font-weight:500;font-family:'Montserrat',sans-serif;">✦ SELVAGGIA</div>
-  <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;font-family:'Montserrat',sans-serif;">Apunta al código QR de tu mesa</div>
+  <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;font-family:'Montserrat',sans-serif;">Apunta al código QR de tu mesa</div>
   <div style="position:relative;width:100%;max-width:300px;border-radius:12px;overflow:hidden;border:2px solid #c9a96e;">
-    <video id="svQRVideo" style="width:100%;display:block;" playsinline autoplay></video>
+    <video id="sv-qr-video" style="width:100%;display:block;" playsinline autoplay></video>
     <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#c9a96e;animation:svScan 2s linear infinite;opacity:0.8;"></div>
-    <canvas id="svQRCanvas" style="display:none;"></canvas>
+    <canvas id="sv-qr-canvas" style="display:none;"></canvas>
   </div>
-  <p id="svScanStatus" style="font-size:0.55rem;color:#6a6050;text-align:center;margin-top:0.8rem;letter-spacing:0.1em;max-width:280px;font-family:'Montserrat',sans-serif;">Buscando código QR...</p>
-  <button onclick="svCerrarScanner()" style="margin-top:1rem;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem 2rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Cancelar</button>
+  <p id="sv-scan-status" style="font-size:0.55rem;color:#6a6050;text-align:center;margin-top:0.8rem;letter-spacing:0.1em;max-width:280px;font-family:'Montserrat',sans-serif;">Buscando código QR...</p>
+  <button onclick="svCerrarScanner()" style="margin-top:1rem;padding:0.7rem 2rem;background:none;border:0.5px solid #2a2a22;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Cancelar</button>
 </div>
 
 <!-- CONTRASEÑA OVERLAY -->
-<div id="svPassOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:99999;align-items:center;justify-content:center;">
+<div id="sv-pass-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:99999;align-items:center;justify-content:center;">
   <div style="background:#0a0a08;border:0.5px solid #2a2a22;border-radius:12px;padding:1.8rem;width:90%;max-width:300px;font-family:'Montserrat',sans-serif;">
     <div style="font-size:0.85rem;letter-spacing:0.4em;color:#c9a96e;text-align:center;margin-bottom:0.2rem;">✦ SELVAGGIA</div>
     <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;text-align:center;margin-bottom:1rem;">Acceso Mesero</div>
     <div style="width:30px;height:0.5px;background:#c9a96e;margin:0 auto 1.2rem;"></div>
     <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Contraseña</div>
-    <input id="svPassInput" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')svVerificarPass()" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;box-sizing:border-box;margin-bottom:0.8rem;"/>
-    <p id="svPassError" style="display:none;color:#c0392b;font-size:0.5rem;text-align:center;margin-bottom:0.7rem;">Contraseña incorrecta</p>
-    <button onclick="svVerificarPass()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:0.8rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;margin-bottom:0.6rem;">Entrar</button>
-    <button onclick="document.getElementById('svPassOverlay').style.display='none'" style="width:100%;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Cancelar</button>
+    <input id="sv-pass-input" type="password" placeholder="••••••••" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.65rem 0.9rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.8rem;outline:none;margin-bottom:0.8rem;" onkeydown="if(event.key==='Enter')svVerificarPass()"/>
+    <p id="sv-pass-error" style="display:none;color:#c0392b;font-size:0.5rem;text-align:center;margin-bottom:0.7rem;">Contraseña incorrecta</p>
+    <button onclick="svVerificarPass()" style="width:100%;background:#c9a96e;border:none;border-radius:6px;padding:0.85rem;font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:#0a0a08;font-weight:600;cursor:pointer;margin-bottom:0.6rem;">Entrar</button>
+    <button onclick="svCerrarPass()" style="width:100%;background:none;border:0.5px solid #2a2a22;border-radius:6px;padding:0.7rem;font-family:'Montserrat',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:#6a6050;cursor:pointer;">Cancelar</button>
   </div>
 </div>
 
@@ -2372,8 +2376,8 @@ select option { color: var(--cream); background: #1a1a16; }
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
+
 <script>
 const SV_PASS='selvaggia2025';
 const SV_TOTAL_MESAS=30;
@@ -2390,23 +2394,24 @@ const SV_MENU={
   'Coctelería':[{n:'Old Fashioned',p:220},{n:'Negroni',p:250},{n:'Manhattan',p:240},{n:'Dry Martini',p:250},{n:'Vesper Martini',p:250},{n:'Cosmopolitan',p:240},{n:'Moscow Mule',p:230},{n:'French 75',p:220},{n:'Sidecar',p:270},{n:'Sazerac',p:250},{n:'Mezcal Rubí',p:250},{n:'Raíz de Jaguar',p:250},{n:'Tigre Amarillo',p:250},{n:'Midnight Boulevardier',p:230},{n:'Nior de Lychee',p:210},{n:'Espresso Martini',p:180},{n:'After Selvaggia',p:190},{n:'Carajillo',p:180},{n:'Canija',p:180}],
   'Infantil':[{n:'Slider Infantil',p:180},{n:'Fusilli Infantil',p:125},{n:'Pechuga de Pollo a la Plancha',p:155}]
 };
+
 let svMesas={},svMesaActiva=null,svCatActiva=null,svClMesaActiva=null,svScanInterval=null,svVideoStream=null;
 
-function svGenerarCodigo(){return String(Math.floor(100000+Math.random()*900000));}
+function svGenCodigo(){return String(Math.floor(100000+Math.random()*900000));}
 
-function svGenerarQR(codigo){
-  const cont=document.getElementById('svQRContainer');
+function svGenQR(codigo){
+  const cont=document.getElementById('sv-qr-container');
   cont.innerHTML='';
-  new QRCode(cont,{text:codigo,width:160,height:160,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+  new QRCode(cont,{text:codigo,width:100,height:100,colorDark:'#c9a96e',colorLight:'#111109',correctLevel:QRCode.CorrectLevel.H});
 }
 
 function svRenderMesas(){
-  const grid=document.getElementById('svMesaGrid');
+  const grid=document.getElementById('sv-mesa-grid');
   grid.innerHTML='';
   for(let i=1;i<=SV_TOTAL_MESAS;i++){
     const ocupada=svMesas[i]&&svMesas[i].activa;
     const btn=document.createElement('button');
-    btn.style.cssText=`aspect-ratio:1;border-radius:8px;border:0.5px solid ${ocupada?'#c9a96e':'#2a2a22'};background:${ocupada?'#0f0f0d':'#111109'};cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:'Montserrat',sans-serif;position:relative;`;
+    btn.style.cssText=`aspect-ratio:1;border-radius:8px;border:0.5px solid ${ocupada?'#c9a96e':'#2a2a22'};background:${ocupada?'#0f0f0d':'#111109'};cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:'Montserrat',sans-serif;transition:all 0.2s;position:relative;`;
     btn.innerHTML=`${ocupada?'<span style="position:absolute;top:3px;right:5px;color:#c9a96e;font-size:7px;">●</span>':''}<span style="font-size:0.75rem;font-weight:600;color:${ocupada?'#c9a96e':'#e8e0d0'};">${i}</span><span style="font-size:0.38rem;letter-spacing:0.1em;text-transform:uppercase;color:${ocupada?'#c9a96e':'#4a4840'};">${ocupada?'Ocupada':'Libre'}</span>`;
     btn.onclick=()=>svSeleccionarMesa(i);
     grid.appendChild(btn);
@@ -2415,30 +2420,30 @@ function svRenderMesas(){
 
 function svSeleccionarMesa(num){
   svMesaActiva=num;
-  if(!svMesas[num]||!svMesas[num].activa)svMesas[num]={activa:true,codigo:svGenerarCodigo(),items:[],total:0};
-  document.getElementById('svComandaTitle').textContent='Mesa '+num;
-  document.getElementById('svCodigoMesa').textContent=svMesas[num].codigo;
-  svGenerarQR(svMesas[num].codigo);
+  if(!svMesas[num]||!svMesas[num].activa)svMesas[num]={activa:true,codigo:svGenCodigo(),items:[],total:0};
+  document.getElementById('sv-comanda-title').textContent='Mesa '+num;
+  document.getElementById('sv-codigo-mesa').textContent=svMesas[num].codigo;
+  svGenQR(svMesas[num].codigo);
   svRenderComanda();svRenderCats();
-  document.getElementById('svVistaMesas').style.display='none';
-  document.getElementById('svVistaComanda').style.display='block';
+  document.getElementById('sv-vista-mesas').style.display='none';
+  document.getElementById('sv-vista-comanda').style.display='block';
   svRenderMesas();
 }
 
 function svVolverMesas(){
-  document.getElementById('svVistaMesas').style.display='block';
-  document.getElementById('svVistaComanda').style.display='none';
+  document.getElementById('sv-vista-mesas').style.display='block';
+  document.getElementById('sv-vista-comanda').style.display='none';
   svCatActiva=null;
 }
 
 function svRenderCats(){
-  document.getElementById('svCats').innerHTML=Object.keys(SV_MENU).map(cat=>
+  document.getElementById('sv-cats').innerHTML=Object.keys(SV_MENU).map(cat=>
     `<button onclick="svToggleCat('${cat}')" style="background:none;border:0.5px solid ${svCatActiva===cat?'#c9a96e':'#2a2a22'};border-radius:6px;padding:0.38rem 0.65rem;font-family:'Montserrat',sans-serif;font-size:0.44rem;letter-spacing:0.1em;text-transform:uppercase;color:${svCatActiva===cat?'#c9a96e':'#6a6050'};cursor:pointer;white-space:nowrap;">${cat}</button>`
   ).join('');
 }
 
 function svToggleCat(cat){
-  const lista=document.getElementById('svPlats');
+  const lista=document.getElementById('sv-plats');
   if(svCatActiva===cat){svCatActiva=null;lista.style.display='none';lista.innerHTML='';}
   else{
     svCatActiva=cat;lista.style.display='block';
@@ -2461,13 +2466,13 @@ function svAgregar(nombre,precio){
 }
 
 function svAgregarManual(){
-  const n=document.getElementById('svPlatInput').value.trim();
-  const p=parseInt(document.getElementById('svPrecInput').value);
+  const n=document.getElementById('sv-plat-input').value.trim();
+  const p=parseInt(document.getElementById('sv-prec-input').value);
   if(!n||!p||p<=0)return;
   svMesas[svMesaActiva].items.push({nombre:n,precio:p});
   svMesas[svMesaActiva].total+=p;
-  document.getElementById('svPlatInput').value='';
-  document.getElementById('svPrecInput').value='';
+  document.getElementById('sv-plat-input').value='';
+  document.getElementById('sv-prec-input').value='';
   svRenderComanda();
   if(svClMesaActiva===svMesaActiva)svRenderCuentaCliente();
   svToast(n+' agregado');
@@ -2475,9 +2480,9 @@ function svAgregarManual(){
 
 function svRenderComanda(){
   const m=svMesas[svMesaActiva];
-  const lista=document.getElementById('svListaComanda');
-  const empty=document.getElementById('svEmptyComanda');
-  if(!m||m.items.length===0){lista.innerHTML='';empty.style.display='block';document.getElementById('svTotalComanda').textContent='$0';return;}
+  const lista=document.getElementById('sv-lista-comanda');
+  const empty=document.getElementById('sv-empty-comanda');
+  if(!m||m.items.length===0){lista.innerHTML='';empty.style.display='block';document.getElementById('sv-total-comanda').textContent='$0';return;}
   empty.style.display='none';
   lista.innerHTML=m.items.map((item,idx)=>`
     <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:0.5px solid #1a1a14;gap:8px;">
@@ -2485,7 +2490,7 @@ function svRenderComanda(){
       <span style="font-size:0.65rem;color:#c9a96e;font-weight:500;">$${item.precio.toLocaleString()}</span>
       <button onclick="svEliminarItem(${idx})" style="background:none;border:none;color:#3a3830;cursor:pointer;font-size:12px;padding:0 3px;">✕</button>
     </div>`).join('');
-  document.getElementById('svTotalComanda').textContent='$'+m.total.toLocaleString();
+  document.getElementById('sv-total-comanda').textContent='$'+m.total.toLocaleString();
 }
 
 function svEliminarItem(idx){
@@ -2508,33 +2513,33 @@ function svLimpiarMesa(){
 }
 
 function svVerificarCodigo(codigoParam){
-  const codigo=codigoParam||document.getElementById('svClCodeInput').value.trim();
+  const codigo=codigoParam||document.getElementById('sv-cl-code').value.trim();
   let encontrada=null;
   for(let num in svMesas){if(svMesas[num].activa&&svMesas[num].codigo===codigo){encontrada=parseInt(num);break;}}
   if(encontrada){
     svClMesaActiva=encontrada;
-    document.getElementById('svClError').style.display='none';
-    document.getElementById('svClLogin').style.display='none';
-    document.getElementById('svClCuenta').style.display='block';
-    document.getElementById('svClMesaLabel').textContent='Mesa '+encontrada;
+    document.getElementById('sv-cl-error').style.display='none';
+    document.getElementById('sv-cl-login').style.display='none';
+    document.getElementById('sv-cl-cuenta').style.display='block';
+    document.getElementById('sv-cl-mesa-label').textContent='Mesa '+encontrada;
     svRenderCuentaCliente();
   } else {
-    document.getElementById('svClError').style.display='block';
+    document.getElementById('sv-cl-error').style.display='block';
   }
 }
 
 function svAbrirScanner(){
-  const overlay=document.getElementById('svScannerOverlay');
+  const overlay=document.getElementById('sv-scanner-overlay');
   overlay.style.display='flex';
-  document.getElementById('svScanStatus').textContent='Iniciando cámara...';
-  const video=document.getElementById('svQRVideo');
-  const canvas=document.getElementById('svQRCanvas');
+  overlay.style.flexDirection='column';
+  const video=document.getElementById('sv-qr-video');
+  const canvas=document.getElementById('sv-qr-canvas');
   navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})
     .then(stream=>{
       svVideoStream=stream;
       video.srcObject=stream;
       video.play();
-      document.getElementById('svScanStatus').textContent='Apunta al código QR de tu mesa...';
+      document.getElementById('sv-scan-status').textContent='Apunta al código QR de tu mesa...';
       const ctx=canvas.getContext('2d');
       svScanInterval=setInterval(()=>{
         if(video.readyState===video.HAVE_ENOUGH_DATA){
@@ -2545,27 +2550,29 @@ function svAbrirScanner(){
           const code=jsQR(imageData.data,imageData.width,imageData.height,{inversionAttempts:'dontInvert'});
           if(code&&/^\d{6}$/.test(code.data)){
             svCerrarScanner();
-            document.getElementById('svClCodeInput').value=code.data;
+            document.getElementById('sv-cl-code').value=code.data;
             svVerificarCodigo(code.data);
           }
         }
       },200);
     })
-    .catch(()=>{document.getElementById('svScanStatus').textContent='No se pudo acceder a la cámara. Usa el código manual.';});
+    .catch(()=>{
+      document.getElementById('sv-scan-status').textContent='No se pudo acceder a la cámara. Usa el código manual.';
+    });
 }
 
 function svCerrarScanner(){
   if(svVideoStream)svVideoStream.getTracks().forEach(t=>t.stop());
   clearInterval(svScanInterval);
   svVideoStream=null;
-  document.getElementById('svScannerOverlay').style.display='none';
+  document.getElementById('sv-scanner-overlay').style.display='none';
 }
 
 function svRenderCuentaCliente(){
   const m=svMesas[svClMesaActiva];
   if(!m)return;
-  const items=document.getElementById('svClItems');
-  const empty=document.getElementById('svClEmpty');
+  const items=document.getElementById('sv-cl-items');
+  const empty=document.getElementById('sv-cl-empty');
   if(m.items.length===0){items.innerHTML='';empty.style.display='block';}
   else{
     empty.style.display='none';
@@ -2575,50 +2582,53 @@ function svRenderCuentaCliente(){
         <span style="font-size:0.65rem;color:#c9a96e;font-weight:500;">$${item.precio.toLocaleString()}</span>
       </div>`).join('');
   }
-  document.getElementById('svClTotal').textContent='$'+m.total.toLocaleString();
+  document.getElementById('sv-cl-total').textContent='$'+m.total.toLocaleString();
 }
 
 function svSalirCuenta(){
   svClMesaActiva=null;
-  document.getElementById('svClLogin').style.display='block';
-  document.getElementById('svClCuenta').style.display='none';
-  document.getElementById('svClCodeInput').value='';
+  document.getElementById('sv-cl-login').style.display='block';
+  document.getElementById('sv-cl-cuenta').style.display='none';
+  document.getElementById('sv-cl-code').value='';
 }
 
 function svPedirPass(){
-  document.getElementById('svPassOverlay').style.display='flex';
-  document.getElementById('svPassInput').value='';
-  document.getElementById('svPassError').style.display='none';
-  setTimeout(()=>document.getElementById('svPassInput').focus(),100);
+  const overlay=document.getElementById('sv-pass-overlay');
+  overlay.style.display='flex';
+  overlay.style.flexDirection='row';
+  document.getElementById('sv-pass-input').value='';
+  document.getElementById('sv-pass-error').style.display='none';
+  setTimeout(()=>document.getElementById('sv-pass-input').focus(),100);
 }
 
 function svVerificarPass(){
-  if(document.getElementById('svPassInput').value===SV_PASS){
-    document.getElementById('svPassOverlay').style.display='none';
-    svSetTab('mesero');
-    svRenderMesas();
+  if(document.getElementById('sv-pass-input').value===SV_PASS){
+    document.getElementById('sv-pass-overlay').style.display='none';
+    svSetTab('mesero');svRenderMesas();
   } else {
-    document.getElementById('svPassError').style.display='block';
+    document.getElementById('sv-pass-error').style.display='block';
   }
 }
 
+function svCerrarPass(){document.getElementById('sv-pass-overlay').style.display='none';}
+
 function svSetTab(tab){
-  document.getElementById('svPanelMesero').style.display=tab==='mesero'?'block':'none';
-  document.getElementById('svPanelCliente').style.display=tab==='cliente'?'block':'none';
-  document.getElementById('svTabM').style.color=tab==='mesero'?'#c9a96e':'#6a6050';
-  document.getElementById('svTabM').style.borderBottom=tab==='mesero'?'1px solid #c9a96e':'0.5px solid #2a2a22';
-  document.getElementById('svTabC').style.color=tab==='cliente'?'#c9a96e':'#6a6050';
-  document.getElementById('svTabC').style.borderBottom=tab==='cliente'?'1px solid #c9a96e':'0.5px solid #2a2a22';
+  document.getElementById('sv-panel-mesero').style.display=tab==='mesero'?'block':'none';
+  document.getElementById('sv-panel-cliente').style.display=tab==='cliente'?'block':'none';
+  document.getElementById('sv-tab-m').style.color=tab==='mesero'?'#c9a96e':'#6a6050';
+  document.getElementById('sv-tab-m').style.borderBottom=tab==='mesero'?'1px solid #c9a96e':'0.5px solid #2a2a22';
+  document.getElementById('sv-tab-c').style.color=tab==='cliente'?'#c9a96e':'#6a6050';
+  document.getElementById('sv-tab-c').style.borderBottom=tab==='cliente'?'1px solid #c9a96e':'0.5px solid #2a2a22';
 }
 
 function svToast(msg){
-  let t=document.getElementById('svToastEl');
-  if(!t){t=document.createElement('div');t.id='svToastEl';t.style.cssText='display:none;position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#1a1a14;border:0.5px solid #c9a96e;border-radius:8px;padding:0.7rem 1.2rem;font-family:Montserrat,sans-serif;font-size:0.6rem;color:#c9a96e;z-index:99999;';document.body.appendChild(t);}
+  let t=document.getElementById('sv-toast-el');
+  if(!t){t=document.createElement('div');t.id='sv-toast-el';t.style.cssText='display:none;position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#1a1a14;border:0.5px solid #c9a96e;border-radius:8px;padding:0.7rem 1.2rem;font-family:Montserrat,sans-serif;font-size:0.6rem;color:#c9a96e;z-index:99999;';document.body.appendChild(t);}
   t.textContent=msg;t.style.display='block';
   setTimeout(()=>t.style.display='none',2000);
 }
 </script>
-  
+
 <!-- AI Float Button -->
 <div class="ai-float">
   <button class="ai-btn" onclick="openWhatsApp()" title="Asistente IA — Reservar o consultar">
