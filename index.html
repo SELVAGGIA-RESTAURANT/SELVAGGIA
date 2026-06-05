@@ -2268,7 +2268,7 @@ select option { color: var(--cream); background: #1a1a16; }
         <div style="color:#6a6050;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;">Código único del cliente</div>
         <div id="svCodigoMesa" style="font-size:2rem;font-weight:600;color:#c9a96e;letter-spacing:0.3em;">------</div>
         <div style="font-size:0.45rem;color:#4a4840;margin-top:4px;letter-spacing:0.1em;">Muéstrale este QR al cliente</div>
-        <div id="svQRContainer" style="margin-top:0.8rem;display:flex;justify-content:center;"></div>
+        <div id="svQRContainer" style="margin-top:0.8rem;display:flex;justify-content:center;background:#c9a96e;padding:10px;border-radius:10px;"
       </div>
       <div style="display:grid;grid-template-columns:1fr 65px auto;gap:5px;margin-bottom:0.8rem;align-items:end;">
         <input id="svPlatInput" placeholder="Platillo" style="width:100%;background:#111109;border:0.5px solid #2a2a22;border-radius:6px;padding:0.6rem 0.8rem;color:#e8e0d0;font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;"/>
@@ -2397,7 +2397,7 @@ function svGenerarCodigo(){return String(Math.floor(100000+Math.random()*900000)
 function svGenerarQR(codigo){
   const cont=document.getElementById('svQRContainer');
   cont.innerHTML='';
-  new QRCode(cont,{text:codigo,width:160,height:160,colorDark:'#0a0a08',colorLight:'#c9a96e',correctLevel:QRCode.CorrectLevel.H});
+  new QRCode(cont,{text:codigo,width:160,height:160,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
 }
 
 function svRenderMesas(){
