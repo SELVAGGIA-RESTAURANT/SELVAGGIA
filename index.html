@@ -2397,7 +2397,7 @@ function svGenerarCodigo(){return String(Math.floor(100000+Math.random()*900000)
 function svGenerarQR(codigo){
   const cont=document.getElementById('svQRContainer');
   cont.innerHTML='';
-  new QRCodeStyling({width:180,height:180,data:codigo,dotsOptions:{type:'rounded',color:'#000000'},cornersSquareOptions:{type:'extra-rounded',color:'#000000'},backgroundOptions:{color:'#ffffff'}}).append(cont);
+  new QRCode(cont,{text:codigo,width:160,height:160,colorDark:'#0a0a08',colorLight:'#c9a96e',correctLevel:QRCode.CorrectLevel.H});
 }
 
 function svRenderMesas(){
